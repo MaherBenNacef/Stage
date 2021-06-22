@@ -12,4 +12,5 @@ public interface CategorieService {
     Categories deleteCategories(long id);
     Categories updateCategories(long id,Categories categories);
     Categories findCategoriesById(long id);
+    public String CategorydeleteEntity(long id);
 }
