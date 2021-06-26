@@ -1,15 +1,15 @@
-package com.example.demo.Services;
+package com.example.demo.services;
 
+import com.example.demo.models.Categories;
 import com.example.demo.models.Produits;
 import com.example.demo.repositories.CategoriesRepositories;
 import com.example.demo.repositories.ProduitsRepositories;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class ProduitsServiceImpl implements ProduitsService{
@@ -32,20 +32,21 @@ public class ProduitsServiceImpl implements ProduitsService{
     @Override
     public Produits createProduits(Produits produits,long categorieId) {
         produits.setDate_creation(LocalDate.now());
-        produits.setCategories(categoriesRepositories.findById(categorieId).get());
+        Optional<Categories> categorie =categoriesRepositories.findById(categorieId);
+        produits.setCategories(categorie.orElseThrow(()-> new NoSuchElementException()));
         return repositories.save(produits);
     }
 
     @Override
     public Produits deleteProduits(long id) {
-        Produits p = findProduitsById(id);
+        var p = findProduitsById(id);
         repositories.deleteById(id);
         return p;
     }
 
     @Override
     public Produits updateProduits(long id, Produits produits) {
-        Produits produitsDb= findProduitsById(id);
+        var produitsDb= findProduitsById(id);
         if (produits.getDisponibilite()!=produitsDb.getDisponibilite())
             produitsDb.setDisponibilite(produits.getDisponibilite());
         if (produits.getNom()!=produitsDb.getNom())
@@ -60,10 +61,8 @@ public class ProduitsServiceImpl implements ProduitsService{
 
     @Override
     public Produits findProduitsById(long id) {
-
-         if (repositories.findById(id).isPresent()){
-             return repositories.findById(id).get();
-         }else throw new NoSuchElementException("Produit n'existe pas !");
+        Optional<Produits> produit=repositories.findById(id);
+        return produit.orElseThrow(()->new NoSuchElementException());
     }
 
 

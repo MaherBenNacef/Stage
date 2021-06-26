@@ -1,12 +1,11 @@
-package com.example.demo.Services;
-
+package com.example.demo.services;
 import com.example.demo.models.Categories;
 import com.example.demo.models.Produits;
 import com.example.demo.repositories.CategoriesRepositories;
 import com.example.demo.repositories.ProduitsRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
+
 
 import java.time.LocalDate;
 import java.util.*;
@@ -36,14 +35,14 @@ public class CategoriesServiceImpl implements CategorieService {
 
     @Override
     public Categories deleteCategories(long id) {
-        Categories c = findCategoriesById(id);
+       var c = findCategoriesById(id);
         repositories.deleteById(id);
         return c;
     }
 
     @Override
     public Categories updateCategories(long id, Categories categories) {
-        Categories categoriesDb = findCategoriesById(id);
+        var categoriesDb = findCategoriesById(id);
         if (categories.getNom()!=categoriesDb.getNom())
             categoriesDb.setNom(categories.getNom());
         if (categories.getQte()!=categoriesDb.getQte())
@@ -57,26 +56,19 @@ public class CategoriesServiceImpl implements CategorieService {
 
     @Override
     public Categories findCategoriesById(long id) {
-        if (repositories.findById(id).isPresent()){
-            return repositories.findById(id).get();
-        }else throw new NoSuchElementException("Categories n'existe pas !");
+        Optional<Categories> categories = repositories.findById(id);
+        return  categories.orElseThrow(()->new NoSuchElementException());
     }
 
     public void deleteproduit(Long produitId)  {
-        /*Produits produit = repositories.findById(produitId)
-                .orElseThrow(() -> new Exception("produit not found for this id :: " + produitId) {
-                });*/
-        produitsRepositories.delete(produitsRepositories.findById(produitId).get());
-        //Map<String, Boolean> response = new HashMap<>();
-        //response.put("deleted", Boolean.TRUE);
-
+        produitsRepositories.deleteById(produitId);
     }
 
 
 
 
     @Override
-    public String CategorydeleteEntity(long id) {
+    public String categorydeleteEntity(long id) {
 
         List<Produits> produitsList = produitsRepositories.findAll();
         for(Produits p : produitsList)

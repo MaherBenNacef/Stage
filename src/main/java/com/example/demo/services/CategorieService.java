@@ -1,7 +1,7 @@
-package com.example.demo.Services;
+package com.example.demo.services;
 
 import com.example.demo.models.Categories;
-import com.example.demo.models.Produits;
+
 
 import java.util.List;
 
@@ -12,5 +12,5 @@ public interface CategorieService {
     Categories deleteCategories(long id);
     Categories updateCategories(long id,Categories categories);
     Categories findCategoriesById(long id);
-    public String CategorydeleteEntity(long id);
+    public String categorydeleteEntity(long id);
 }
