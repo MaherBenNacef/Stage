@@ -56,10 +56,12 @@ public class CategoriesRest {
     public String deleteCat(@PathVariable("id") long id){
         List<Produits> produitsList = produitsRepositories.findAll();
         for(Produits p : produitsList)
-            produitsRepositories.deleteById(p.getId());
+            if(p.getCategories().getId()==id){
+                produitsRepositories.deleteById(p.getId());
+            }
         try{
             repositories.deleteById(id);
-        }catch (Exception e){
+        }catch (NoSuchElementException e){
             return "Categorie Not found";
         }
         return "Categorie deleted";
