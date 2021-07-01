@@ -1,7 +1,8 @@
 package com.example.demo.models;
 import lombok.Data;
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.sql.Timestamp;
+
 
 
 @Entity
@@ -15,12 +16,12 @@ public class Produits {
     private String nom;
     private int qte;
     private Boolean disponibilite;
-    private LocalDate date_creation;
-    private LocalDate date_modif;
+    private Timestamp date_creation;
+    private Timestamp date_modif;
     @ManyToOne
     private Categories categories;
 
-    public Produits(String nom, int qte, Boolean disponibilite, LocalDate date_creation, LocalDate date_modif) {
+    public Produits(String nom, int qte, Boolean disponibilite, Timestamp date_creation, Timestamp date_modif) {
         this.nom = nom;
         this.qte = qte;
         this.disponibilite = disponibilite;

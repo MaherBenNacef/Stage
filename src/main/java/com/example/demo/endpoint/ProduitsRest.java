@@ -18,9 +18,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/produits")
 public class ProduitsRest {
 
-    private ProduitsService service;
-    private ProduitsRepositories repositories;
-    private ModelMapper mapper;
+    private final ProduitsService service;
+    private final ProduitsRepositories repositories;
+    private final ModelMapper mapper;
 
 
     @Autowired
@@ -53,7 +53,8 @@ public class ProduitsRest {
     public List<Produits> getByCategorie(@PathVariable(value = "id") Long idCategorie)throws NoSuchElementException{
         return repositories.findAll()
                 .stream()
-                .filter(p->p.getCategories().getId()==idCategorie)
+                .filter(m->m.getCategories().getId()==idCategorie)
+                //.filter(p->p.getCategories().getId()==idCategorie)
                 .collect(Collectors.toList());
 
     }

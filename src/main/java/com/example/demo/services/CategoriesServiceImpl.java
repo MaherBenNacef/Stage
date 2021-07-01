@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.util.*;
 
 @Service
@@ -29,7 +29,7 @@ public class CategoriesServiceImpl implements CategorieService {
 
     @Override
     public Categories createCategories(Categories categories) {
-        categories.setDate_creation(LocalDate.now());
+        categories.setDate_creation(new Timestamp(System.currentTimeMillis()));
         return repositories.save(categories);
     }
 
@@ -49,7 +49,7 @@ public class CategoriesServiceImpl implements CategorieService {
             categoriesDb.setQte(categories.getQte());
         if (categories.getProduits()!=null)
             categoriesDb.setProduits(setListProduits(categoriesDb.getProduits(),categories.getProduits()));
-        categoriesDb.setDate_modif(LocalDate.now());
+        categoriesDb.setDate_modif(new Timestamp(System.currentTimeMillis()));
         repositories.save(categoriesDb);
         return categoriesDb;
     }

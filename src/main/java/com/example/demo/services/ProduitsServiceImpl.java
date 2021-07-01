@@ -6,7 +6,8 @@ import com.example.demo.repositories.CategoriesRepositories;
 import com.example.demo.repositories.ProduitsRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.time.LocalDate;
+
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -31,7 +32,7 @@ public class ProduitsServiceImpl implements ProduitsService{
 
     @Override
     public Produits createProduits(Produits produits,long categorieId) {
-        produits.setDate_creation(LocalDate.now());
+        produits.setDate_creation(new Timestamp(System.currentTimeMillis()));
         Optional<Categories> categorie =categoriesRepositories.findById(categorieId);
         produits.setCategories(categorie.orElseThrow(()-> new NoSuchElementException()));
         return repositories.save(produits);
@@ -55,7 +56,7 @@ public class ProduitsServiceImpl implements ProduitsService{
             produitsDb.setQte(produits.getQte());
         if (produits.getCategories()!=produitsDb.getCategories())
             produitsDb.setCategories(produits.getCategories());
-        produitsDb.setDate_modif(LocalDate.now());
+        produitsDb.setDate_modif(new Timestamp(System.currentTimeMillis()));
         return repositories.save(produitsDb);
     }
 

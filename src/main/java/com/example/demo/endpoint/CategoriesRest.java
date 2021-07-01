@@ -11,7 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.dto.DtoCategorie;
-import java.time.LocalDate;
+
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -21,10 +22,10 @@ import java.util.NoSuchElementException;
 @RequestMapping("/categories")
 public class CategoriesRest {
 
-    private CategorieService service;
-    private CategoriesRepositories repositories;
-    private ProduitsRepositories produitsRepositories;
-    private ModelMapper mapper;
+    private final CategorieService service;
+    private final CategoriesRepositories repositories;
+    private final ProduitsRepositories produitsRepositories;
+    private final ModelMapper mapper;
 
     @Autowired
     public CategoriesRest(CategorieService service,CategoriesRepositories repositories,ProduitsRepositories produitsRepositories,ModelMapper mapper) {
@@ -44,7 +45,7 @@ public class CategoriesRest {
     @PostMapping
     public Categories create(@RequestBody DtoCategorie categories){
         var categorie = mapper.map(categories,Categories.class);
-        categorie.setDate_creation(LocalDate.now());
+        categorie.setDate_creation(new Timestamp(System.currentTimeMillis()));
         return repositories.save(categorie);
 
     }
