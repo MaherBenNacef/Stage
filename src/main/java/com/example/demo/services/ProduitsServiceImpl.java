@@ -32,6 +32,8 @@ public class ProduitsServiceImpl implements ProduitsService{
 
     @Override
     public Produits createProduits(Produits produits,long categorieId) {
+        if(produits == null)
+            throw new NoSuchElementException();
         produits.setDate_creation(new Timestamp(System.currentTimeMillis()));
         Optional<Categories> categorie =categoriesRepositories.findById(categorieId);
         produits.setCategories(categorie.orElseThrow(()-> new NoSuchElementException()));

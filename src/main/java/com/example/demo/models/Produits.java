@@ -1,4 +1,5 @@
 package com.example.demo.models;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -7,7 +8,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Data
-
+@AllArgsConstructor
 public class Produits {
 
     @Id
@@ -21,13 +22,13 @@ public class Produits {
     @ManyToOne
     private Categories categories;
 
-    public Produits(String nom, int qte, Boolean disponibilite, Timestamp date_creation, Timestamp date_modif) {
+   /* public Produits(String nom, int qte, Boolean disponibilite, Timestamp date_creation, Timestamp date_modif) {
         this.nom = nom;
         this.qte = qte;
         this.disponibilite = disponibilite;
         this.date_creation = date_creation;
         this.date_modif = date_modif;
-    }
+    }*/
 
     public Produits() {
     }
